@@ -1,0 +1,63 @@
+name: Version Bump & Tag
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  push:
+    branches:
+      - main  # Tags and releases occur only on main
+
+jobs:
+  versioning:
+    runs-on: ubuntu-latest
+    outputs:
+      new_version: ${{ steps.version_bump.outputs.version }}
+      release_tag: ${{ steps.version_bump.outputs.version_tag }}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Needed for correct versioning
+
+      - name: Determine Version Bump
+        id: version_bump
+        uses: paulhatch/semantic-version@v5.4.0
+        with:
+          tag_prefix: "v"
+          major_pattern: "#major"
+          minor_pattern: "#minor"
+          patch_pattern: "#patch"
+          bump_each_commit: true
+          search_commit_body: true
+          search_commit_subject: true
+          namespace: "build"
+          change_path: "."
+
+      - name: Print Version Info
+        run: |
+          echo "New Version: ${{ steps.version_bump.outputs.version }}"
+          echo "Release Tag: ${{ steps.version_bump.outputs.version_tag }}"
+
+  tag_release:
+    if: github.ref == 'refs/heads/main'
+    needs: versioning
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Create and Push Tag
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+
+          git tag ${{ needs.versioning.outputs.release_tag }}
+          git push origin ${{ needs.versioning.outputs.release_tag }}
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create ${{ needs.versioning.outputs.release_tag }} \
+            --title "Release ${{ needs.versioning.outputs.release_tag }}" \
+            --notes "Auto-generated release for version ${{ needs.versioning.outputs.release_tag }}"

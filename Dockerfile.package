@@ -1,0 +1,31 @@
+FROM denoland/deno:2.0.0 AS builder-run
+RUN mkdir -p /app /tar
+# Copy the necessary files into the container
+
+WORKDIR /bin/aarch64-apple-darwin
+WORKDIR /bin/x86_64-apple-darwin
+WORKDIR /bin/aarch64-unknown-linux-gnu
+WORKDIR /bin/x86_64-unknown-linux-gnu
+WORKDIR /bin/x86_64-pc-windows-msvc
+
+WORKDIR /app
+
+COPY src .
+COPY scripts .
+COPY Makefile .
+COPY .envrc .
+COPY release-notes.md .
+
+RUN deno compile --allow-all --target aarch64-apple-darwin --no-check  --output /bin src/bin.ts
+RUN chmod -R 0660 /app
+WORKDIR /app
+RUN tar -cvf ../release.tar .
+
+# ---------
+# Lightweight binary image
+FROM gcr.io/distroless/base-debian12
+WORKDIR /app
+
+COPY --from=builder-run /release.tar /app/release.tar
+
+ENTRYPOINT [ "sh" ]

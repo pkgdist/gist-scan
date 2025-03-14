@@ -1,0 +1,29 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+
+      - name: Build CLI
+        run: make build
+
+      - name: Upload Release Artifact
+        uses: softprops/action-gh-release@v2
+        with:
+          files: gist-scan
