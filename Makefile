@@ -1,12 +1,9 @@
-# import config
+# Evaluate .env/.envcrypt files
+$(touch .envcrypt; touch .env)
+include .envcrypt
+$(eval export $(shell sed -ne 's/ *#.*$$//; /./ s/=.*$$// p' .envcrypt))
 
-ifeq ($(shell test -e .env),yes)
-	cnf ?= .env
-	include $(cnf)
-	export $(shell sed 's/=.*//' $(cnf))
-endif
-
-# HIDDEN
+# Print env var names and values
 print-%: ##  Print env var names and values
 	@echo $* = $($*)
 echo-%: ##  Print any environment variable
@@ -25,10 +22,14 @@ help: ## Print all commands and help info
 env:  ## Source env file if you are running local
 	./scripts/env.sh
 
-build:
+build:  ## Check and Build the binaries
 	deno check ./src/mod.ts
 	deno compile --allow-all --no-check --target aarch64-apple-darwin --output ./bin/aarch64-apple-darwin/scanner ./src/mod.ts
 	deno compile --allow-all --no-check --target x86_64-apple-darwin --output ./bin/x86_64-apple-darwin/scanner ./src/mod.ts
+
+build-local:  ## Build the assets in a docker container
+	docker buildx bake bin
+	docker buildx bake release
 
 git-head:  ## Get the latest git tag
 	git tag -l | tail -n 1

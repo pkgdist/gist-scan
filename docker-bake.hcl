@@ -7,7 +7,9 @@ variable "PROGRAM" {
 variable "BUILD" {
   default = "$BUILD"
 }
-
+variable "TAG" {
+  default = "local"
+}
 target "bin" {
   context = "."
   args = {

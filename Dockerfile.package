@@ -16,9 +16,13 @@ COPY Makefile .
 COPY .envrc .
 COPY release-notes.md .
 
-RUN deno compile --allow-all --target aarch64-apple-darwin --no-check  --output /bin src/bin.ts
+RUN deno compile --allow-all --target aarch64-apple-darwin --no-check  --output /bin src/mod.ts && \
+    deno compile --allow-all --target x86_64-apple-darwin --no-check  --output /bin src/mod.ts && \
+    deno compile --allow-all --target aarch64-unknown-linux-gnu --no-check  --output /bin src/mod.ts && \
+    deno compile --allow-all --target x86_64-unknown-linux-gnu --no-check  --output /bin src/mod.ts
 RUN chmod -R 0660 /app
-WORKDIR /app
+
+WORKDIR /bin
 RUN tar -cvf ../release.tar .
 
 # ---------
