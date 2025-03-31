@@ -2,6 +2,10 @@
 
 **Scan your GitHub Gists for secrets, high-entropy tokens, regex patterns, and terms.**
 
+> [!IMPORTANT]
+>
+> This project is in early alpha.  It can be reliably cloned and run with the "make run" command, on linux systems or those with Makefile support.  We are currently iterating on improving the pagination features and speed.
+
 ---
 
 ## Install

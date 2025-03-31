@@ -1,0 +1,13 @@
+{
+    "name": "@softdist/gist-scanner",
+    "version": "0.1.2",
+    "exports": "./src/mod.ts",
+    "publish": {
+      "include": [
+        "deno.json",
+        "LICENSE",
+        "README.md",
+        "src/**/*.ts"
+      ]
+    }
+  }
