@@ -17,10 +17,11 @@
     },
     "tasks": {
       "test": "deno test -A --unstable",
-      "publish": "deno task generate && deno run -A ./src/build_npm.ts 0.1.2 && cd npm && npm publish",
+      "publish": "deno run -A ./src/build_npm.ts 0.1.2 && cd npm && npm publish",
       "build": "deno run --allow-all src/make_version.ts",
       "check": "deno check mod.ts",
-      "compile": "make build"
+      "compile": "make build",
+      "jsr-publish": "npx jsr publish"
     },
     "imports": {
       "@deno/dnt": "jsr:@deno/dnt@^0.41.2",
