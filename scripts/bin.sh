@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
-
+platform=`uname -m`
 # We don't need return codes for "$(command)", only stdout is needed.
 # Allow `[[ -n "$(command)" ]]`, `func "$(command)"`, pipes, etc.
 # shellcheck disable=SC2312
-set -u
 export __DEVOPS_CONFIG_PATH=$HOME/.config/.devops
 export __DEVOPS_MACHINE_ARCH=`uname -m`
 abort() {
@@ -55,13 +54,26 @@ mkdir -p $HOME/.config/.devops
 _config () {
   brew tap softdist/softdist
   brew reinstall softdist-release
+  docker pull lynsei/run.child.gh:
   sd-install
 }
 
 _run () {
-  sd-run child -i gh -- $@
+  echo "Pulling child images for your platform: $platform."
+  docker pull lynsei/run.child.gh:$platform
+  docker pull lynsei/run.child.volta:$platform
+  docker pull lynsei/run.child.openssl:$platform
+  docker pull lynsei/run.child.fish:$platform
+  docker pull lynsei/run.child.curl:$platform
+  docker pull lynsei/run.child.wget:$platform
+  docker pull lynsei/run.child.yq:$platform
+  docker pull lynsei/run.child.jq:$platform
+  docker pull lynsei/run.child.python3:$platform
+  docker pull lynsei/run.child.golang:$platform
+  echo "Example command:"
+  echo "sd-run child -i gh -- -h"
 }
 
 [ ! -f $__DEVOPS_CONFIG_PATH/.config.location ] && _config
 
-[ -f $__DEVOPS_CONFIG_PATH/.config.location ] && _run $@
+[ -f $__DEVOPS_CONFIG_PATH/.config.location ] && _run 
