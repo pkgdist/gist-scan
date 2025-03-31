@@ -11,7 +11,7 @@
 ## Install
 
 ```bash
-deno install --allow-net --allow-env -n gist-scan https://jsr.io/@softdist/gist-scanner@0.1.0
+deno install --allow-net --allow-env -n gist-scan https://jsr.io/@softdist/gist-scanner@v0.1.2
 ```
 
 ---

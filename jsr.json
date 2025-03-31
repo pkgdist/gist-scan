@@ -1,6 +1,6 @@
 {
     "name": "@softdist/gist-scanner",
-    "version": "0.1.2",
+    "version": "v0.1.2",
     "exports": "./src/mod.ts",
     "publish": {
       "include": [
