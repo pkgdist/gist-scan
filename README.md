@@ -1,6 +1,8 @@
-# @softdist/gist-scanner
+# @pkgdist/gist-scanner
 
 **Scan your GitHub Gists for secrets, high-entropy tokens, regex patterns, and terms.**
+
+Built with Typescript & Deno.
 
 > [!IMPORTANT]
 >
@@ -39,7 +41,7 @@ gist-scan [OPTIONS]
 
 ## Examples
 
-### 1. Search for a specific term in Gists:
+### 1. Search for a specific term in Gists
 
 ```bash
 gist-scan --term "password"
@@ -47,7 +49,7 @@ gist-scan --term "password"
 
 ---
 
-### 2. Search for a regex pattern (e.g., AWS Access Key):
+### 2. Search for a regex pattern (e.g., AWS Access Key)
 
 ```bash
 gist-scan --regex "AKIA[0-9A-Z]{16}"
@@ -55,7 +57,7 @@ gist-scan --regex "AKIA[0-9A-Z]{16}"
 
 ---
 
-### 3. Scan for high-entropy secrets like tokens, JWTs, and hashes:
+### 3. Scan for high-entropy secrets like tokens, JWTs, and hashes
 
 ```bash
 gist-scan --secrets
@@ -63,7 +65,7 @@ gist-scan --secrets
 
 ---
 
-### 4. Combine search for a specific term and delete matched gists (with confirmation):
+### 4. Combine search for a specific term and delete matched gists (with confirmation)
 
 ```bash
 gist-scan --term "password" --delete
@@ -71,7 +73,7 @@ gist-scan --term "password" --delete
 
 ---
 
-### 5. Automatically delete all matched gists (without confirmation):
+### 5. Automatically delete all matched gists (without confirmation)
 
 ```bash
 gist-scan --term "password" --delete --yes
@@ -79,7 +81,7 @@ gist-scan --term "password" --delete --yes
 
 ---
 
-### 6. Combine regex pattern search and secret scanning:
+### 6. Combine regex pattern search and secret scanning
 
 ```bash
 gist-scan --regex "my-api-key-\d+" --secrets
@@ -101,7 +103,7 @@ export GH_SCAN_TOKEN=your_github_pat_here
 
 ## How to Publish to [jsr.io](https://jsr.io)
 
-### 1. Check and validate:
+### 1. Check and validate
 
 ```bash
 deno check mod.ts
@@ -109,7 +111,7 @@ deno check mod.ts
 
 ---
 
-### 2. Publish to jsr.io (replace version appropriately):
+### 2. Publish to jsr.io (replace version appropriately)
 
 ```bash
 jsr publish --version v0.1.0
@@ -117,7 +119,7 @@ jsr publish --version v0.1.0
 
 ---
 
-### 3. Install directly via jsr.io (once published):
+### 3. Install directly via jsr.io (once published)
 
 ```bash
 deno install --allow-net --allow-env -n gist-scan https://jsr.io/@softdist/gist-scanner@0.1.0
@@ -127,4 +129,4 @@ deno install --allow-net --allow-env -n gist-scan https://jsr.io/@softdist/gist-
 
 ## License
 
-MIT License © 2024 SoftDist
+MIT License © 2024 Lyns A.
