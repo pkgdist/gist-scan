@@ -125,6 +125,23 @@ jsr publish --version v0.1.0
 deno install --allow-net --allow-env -n gist-scan https://jsr.io/@softdist/gist-scanner@0.1.0
 ```
 
+
+## Logical Diagram
+
+```mermaid
+---
+title: PR workflow
+---
+  graph TD;
+      terms-->gist_search;
+      terms-->entropy_regex;
+      terms-->single_search;
+      gist_search-->content;
+      gist_search-->title;
+      delete-->dry_run;
+      delete-->auto_delete;
+```
+
 ---
 
 ## License
