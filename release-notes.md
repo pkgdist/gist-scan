@@ -1,14 +1,16 @@
 # Release Notes
 
-* Full Duplex Runner
-* Extricate Secrets
-* Install Automation
-* SD Release Repo [Now Public](https://github.com/softdist/sd-release)
+0.1.2 Version provides:
+
+* Full Gist Scan
+* Dry Run
+* Auto-delete
+* Faster Content Scans
+
+Currently Local Build Support provides scanning only for:
 
 ## Platforms
 
-* Linux
-* Windows
 * Darwin
 
 ## Architectures
